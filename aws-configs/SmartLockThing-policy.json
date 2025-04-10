@@ -1,0 +1,50 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Condition": {
+        "Bool": {
+          "iot:Connection.Thing.IsAttached": "true"
+        }
+      },
+      "Effect": "Allow",
+      "Action": "iot:Connect",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/${iot:Connection.Thing.ThingName}/logs"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/${iot:Connection.Thing.ThingName}/activation/responses"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/${iot:Connection.Thing.ThingName}/deactivations"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Subscribe",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topicfilter/SmartLock/${iot:Connection.Thing.ThingName}/activation/requests"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Receive",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/${iot:Connection.Thing.ThingName}/activation/requests"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Subscribe",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topicfilter/SmartLock/${iot:Connection.Thing.ThingName}/actions"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Receive",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/${iot:Connection.Thing.ThingName}/actions"
+    }
+  ]
+}

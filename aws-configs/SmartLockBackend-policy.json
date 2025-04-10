@@ -1,0 +1,36 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "iot:Connect",
+      "Resource": "arn:aws:iot:eu-central-1:445567088780:client/BackendClient"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": [
+        "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/*/activation/requests",
+        "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/*/actions"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Subscribe",
+      "Resource": [
+        "arn:aws:iot:eu-central-1:445567088780:topicfilter/SmartLock/*/logs",
+        "arn:aws:iot:eu-central-1:445567088780:topicfilter/SmartLock/*/activation/responses",
+        "arn:aws:iot:eu-central-1:445567088780:topicfilter/SmartLock/*/deactivations"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Receive",
+      "Resource": [
+        "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/*/logs",
+        "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/*/activation/responses",
+        "arn:aws:iot:eu-central-1:445567088780:topic/SmartLock/*/deactivations"
+      ]
+    }
+  ]
+}

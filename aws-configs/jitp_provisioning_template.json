@@ -1,0 +1,63 @@
+{
+  "Parameters": {
+    "AWS::IoT::Certificate::CommonName": {
+      "Type": "String"
+    },
+    "AWS::IoT::Certificate::Id": {
+      "Type": "String"
+    },
+    "AWS::IoT::Certificate::SerialNumber": {
+      "Type": "String"
+    },
+    "AWS::IoT::Certificate::DistinguishedNameQualifier": {
+      "Type": "String"
+    },
+    "AWS::IoT::Certificate::OrganizationalUnit": {
+      "Type": "String",
+      "Default": "unclaimed"
+    },
+    "AWS::IoT::Certificate::Organization": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "policy_SmartLockThing-policy": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": "SmartLockThing-policy"
+      }
+    },
+    "certificate": {
+      "Type": "AWS::IoT::Certificate",
+      "Properties": {
+        "CertificateId": {
+          "Ref": "AWS::IoT::Certificate::Id"
+        },
+        "Status": "Active"
+      }
+    },
+    "thing": {
+      "Type": "AWS::IoT::Thing",
+      "OverrideSettings": {
+        "AttributePayload": "MERGE",
+        "ThingGroups": "DO_NOTHING",
+        "ThingTypeName": "REPLACE"
+      },
+      "Properties": {
+        "AttributePayload": {
+          "serialNumber": {
+            "Ref": "AWS::IoT::Certificate::SerialNumber"
+          },
+          "provisioning": "JITP",
+          "CA": "IoT-Device-RootCA"
+        },
+        "ThingGroups": ["Dev"],
+        "ThingName": {
+          "Ref": "AWS::IoT::Certificate::CommonName"
+        },
+        "BillingGroup": "SmartLock",
+        "ThingTypeName": "LockClient"
+      }
+    }
+  }
+}

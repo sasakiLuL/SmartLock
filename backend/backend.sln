@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Api", "src\SmartLock.Api\SmartLock.Api.csproj", "{7CC7822C-F430-444C-BB28-7D57D1537B8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{751F08B0-753F-40B0-A094-8F4877ED33E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EAB88547-BAD6-4AF3-BFF2-5F41E85CB078}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2E73AEE7-D2A4-4527-A2BF-20241E9F2BF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Domain", "src\SmartLock.Domain\SmartLock.Domain.csproj", "{8083C96B-54AD-46F5-9395-6A03832B4224}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Application", "src\SmartLock.Application\SmartLock.Application.csproj", "{73BD5093-F6F9-4BA0-BE0C-36E79BAE03C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.DataAccessLayer", "src\SmartLock.DataAccessLayer\SmartLock.DataAccessLayer.csproj", "{B02C3970-20B6-45B8-9944-37E0FAFE58C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Authorization", "src\SmartLock.Authorization\SmartLock.Authorization.csproj", "{7B6A6E8E-7F3E-457A-816D-45B5A7C88B6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLock.Messaging", "src\SmartLock.Messaging\SmartLock.Messaging.csproj", "{6215E9E5-306B-480F-B6C7-68D59BD675C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CC7822C-F430-444C-BB28-7D57D1537B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC7822C-F430-444C-BB28-7D57D1537B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC7822C-F430-444C-BB28-7D57D1537B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC7822C-F430-444C-BB28-7D57D1537B8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E73AEE7-D2A4-4527-A2BF-20241E9F2BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E73AEE7-D2A4-4527-A2BF-20241E9F2BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E73AEE7-D2A4-4527-A2BF-20241E9F2BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E73AEE7-D2A4-4527-A2BF-20241E9F2BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8083C96B-54AD-46F5-9395-6A03832B4224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8083C96B-54AD-46F5-9395-6A03832B4224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8083C96B-54AD-46F5-9395-6A03832B4224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8083C96B-54AD-46F5-9395-6A03832B4224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73BD5093-F6F9-4BA0-BE0C-36E79BAE03C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73BD5093-F6F9-4BA0-BE0C-36E79BAE03C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73BD5093-F6F9-4BA0-BE0C-36E79BAE03C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73BD5093-F6F9-4BA0-BE0C-36E79BAE03C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B02C3970-20B6-45B8-9944-37E0FAFE58C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B02C3970-20B6-45B8-9944-37E0FAFE58C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B02C3970-20B6-45B8-9944-37E0FAFE58C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B02C3970-20B6-45B8-9944-37E0FAFE58C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B6A6E8E-7F3E-457A-816D-45B5A7C88B6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B6A6E8E-7F3E-457A-816D-45B5A7C88B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B6A6E8E-7F3E-457A-816D-45B5A7C88B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B6A6E8E-7F3E-457A-816D-45B5A7C88B6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6215E9E5-306B-480F-B6C7-68D59BD675C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6215E9E5-306B-480F-B6C7-68D59BD675C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6215E9E5-306B-480F-B6C7-68D59BD675C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6215E9E5-306B-480F-B6C7-68D59BD675C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7CC7822C-F430-444C-BB28-7D57D1537B8F} = {751F08B0-753F-40B0-A094-8F4877ED33E6}
+		{8083C96B-54AD-46F5-9395-6A03832B4224} = {751F08B0-753F-40B0-A094-8F4877ED33E6}
+		{73BD5093-F6F9-4BA0-BE0C-36E79BAE03C8} = {751F08B0-753F-40B0-A094-8F4877ED33E6}
+		{B02C3970-20B6-45B8-9944-37E0FAFE58C4} = {751F08B0-753F-40B0-A094-8F4877ED33E6}
+		{7B6A6E8E-7F3E-457A-816D-45B5A7C88B6B} = {751F08B0-753F-40B0-A094-8F4877ED33E6}
+		{6215E9E5-306B-480F-B6C7-68D59BD675C3} = {751F08B0-753F-40B0-A094-8F4877ED33E6}
+	EndGlobalSection
+EndGlobal

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-using SmartLock.Application.Abstractions;
+using SmartLock.Application.Interfaces;
 using SmartLock.Authorization.Options;
 using System.Net.Http.Headers;
 using System.Text.Json;

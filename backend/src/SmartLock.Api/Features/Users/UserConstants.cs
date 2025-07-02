@@ -1,4 +1,4 @@
-﻿namespace SmartLock.Api.Users;
+﻿namespace SmartLock.Api.Features.Users;
 
 public static class UserConstants
 {

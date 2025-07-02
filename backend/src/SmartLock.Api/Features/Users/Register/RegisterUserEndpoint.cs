@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SmartLock.Application.Users.Register;
+using SmartLock.Application.Features.Users.Register;
 
-namespace SmartLock.Api.Users.Register;
+namespace SmartLock.Api.Features.Users.Register;
 
 public class RegisterUserEndpoint : IEndpoint
 {
@@ -12,11 +12,11 @@ public class RegisterUserEndpoint : IEndpoint
         app.MapPost(
             $"{UserConstants.Routes.Base}/{UserConstants.Routes.Register}",
             async (
-                [FromBody] RegisterUserRequest request, 
-                ISender sender, 
+                [FromBody] RegisterUserRequest request,
+                ISender sender,
                 IMapper mapper,
                 HttpContext context,
-                CancellationToken cancellationToken) => 
+                CancellationToken cancellationToken) =>
             {
                 var registerUserCommand = mapper.Map<RegisterUserCommand>(request);
 

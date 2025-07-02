@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SmartLock.Application.Users;
-using SmartLock.Application.Users.GetById;
+using SmartLock.Application.Features.Users;
+using SmartLock.Application.Features.Users.GetById;
 
-namespace SmartLock.Api.Users.GetById;
+namespace SmartLock.Api.Features.Users.GetById;
 
 public class GetUserByIdEndpoint : IEndpoint
 {
@@ -12,8 +12,8 @@ public class GetUserByIdEndpoint : IEndpoint
         app.MapGet(
             $"{UserConstants.Routes.Base}/{UserConstants.Routes.GetById}",
             async (
-                [FromRoute] Guid id, 
-                ISender sender, 
+                [FromRoute] Guid id,
+                ISender sender,
                 CancellationToken cancellationToken) =>
             {
                 var query = new GetUserByIdQuery(id);

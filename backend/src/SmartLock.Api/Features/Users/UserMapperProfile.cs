@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using SmartLock.Api.Users.Register;
-using SmartLock.Application.Users;
-using SmartLock.Application.Users.Register;
-using SmartLock.Domain.Shared.EmailAddresses;
-using SmartLock.Domain.Shared.Usernames;
-using SmartLock.Domain.Users;
+using SmartLock.Api.Features.Users.Register;
+using SmartLock.Application.Features.Users;
+using SmartLock.Application.Features.Users.Register;
+using SmartLock.Domain.Features.Users;
+using SmartLock.Domain.ValueObjects.EmailAddresses;
+using SmartLock.Domain.ValueObjects.Usernames;
 
-namespace SmartLock.Api.Users;
+namespace SmartLock.Api.Features.Users;
 
 public class UserMapperProfile : Profile
 {
@@ -16,7 +16,7 @@ public class UserMapperProfile : Profile
             .ForMember(x => x.Email, x => x.MapFrom(x => x.Email))
             .ForMember(x => x.UserName, x => x.MapFrom(x => x.Username));
 
-        CreateMap<User, UserResponse>()
+        CreateMap<UserModel, UserResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(opt => opt.Id))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username));

@@ -1,4 +1,4 @@
-﻿namespace SmartLock.Application.Abstractions;
+﻿namespace SmartLock.Application.Interfaces;
 
 public interface IUnitOfWork
 {

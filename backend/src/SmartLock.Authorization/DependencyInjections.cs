@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SmartLock.Application.Abstractions;
+using SmartLock.Application.Interfaces;
 using SmartLock.Authorization.IdentityProvider;
 using SmartLock.Authorization.Options;
 

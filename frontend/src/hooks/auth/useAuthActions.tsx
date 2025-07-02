@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { KeycloakContext } from "./KeycloakProvider";
+import { KeycloakLoginOptions, KeycloakLogoutOptions, KeycloakRegisterOptions } from "keycloak-js";
 
 export interface AuthActions {
-  login: () => void;
-  register: () => void;
-  logout: () => void;
+  login: (options?: KeycloakLoginOptions) => Promise<void>;
+  register: (options?: KeycloakRegisterOptions) => Promise<void>;
+  logout: (options?: KeycloakLogoutOptions) => Promise<void>;
 }
 
-export function useAuthActions() {
+export default function useAuthActions() {
   const keycloakService = useContext(KeycloakContext);
 
   if (keycloakService === undefined) {

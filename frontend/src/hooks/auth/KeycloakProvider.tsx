@@ -1,4 +1,4 @@
-import Keycloak, { KeycloakTokenParsed } from "keycloak-js";
+import Keycloak, { KeycloakLoginOptions, KeycloakLogoutOptions, KeycloakRegisterOptions, KeycloakTokenParsed } from "keycloak-js";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { KeycloakSettings } from "../../utils/KeycloakSettings";
 
@@ -10,9 +10,9 @@ export interface KeycloakService {
   isAuthenticated: boolean;
   token: string | null;
   tokenParsed: KeycloakTokenParsed | null;
-  login: () => void;
-  register: () => void;
-  logout: () => void;
+  login: (options?: KeycloakLoginOptions) => Promise<void>;
+  register: (options?: KeycloakRegisterOptions) => Promise<void>;
+  logout: (options?: KeycloakLogoutOptions) => Promise<void>;
 }
 
 const keycloak = new Keycloak(KeycloakSettings);

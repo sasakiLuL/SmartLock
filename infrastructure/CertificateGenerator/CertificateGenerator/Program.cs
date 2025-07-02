@@ -2,10 +2,8 @@
 
 Dictionary<string, ICommand> commands = [];
 
-commands.Add("gen-rootCA-certs", new GenerateRootSertificatesCommand());
+commands.Add("gen-rootCA-certs", new GenerateRootCertificatesCommand());
 commands.Add("gen-device-cert", new GenerateDeviceCeritificateCommand());
-
-List<string> argsList = [..args]; 
 
 if (!args.Any())
 {

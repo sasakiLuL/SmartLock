@@ -1,17 +1,15 @@
 import { useEffect } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { Button, Container, Stack, Typography } from "@mui/material";
-import { useAuthActions } from "../../hooks/auth/useAuthActions";
+import useAuthActions from "../../hooks/auth/useAuthActions";
 import { NavigationBar } from "../../components/NavigationBar";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
-import { useNavigate } from "react-router-dom";
 import { NavLinks } from "../../utils/NavLinks";
 
 export function ProfilePage() {
   var auth = useAuth();
   var authActions = useAuthActions();
-  var navigate = useNavigate();
 
   useEffect(() => {}, [auth]);
 
@@ -48,8 +46,9 @@ export function ProfilePage() {
               variant="contained"
               color="error"
               onClick={() => {
-                authActions.logout();
-                navigate(NavLinks.Devices);
+                authActions.logout({
+                  redirectUri: window.location.origin + NavLinks.Default,
+                });
               }}
             >
               Log out

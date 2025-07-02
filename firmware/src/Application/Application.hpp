@@ -5,50 +5,41 @@
 #include "../Pages/Core/Controller/Controller.hpp"
 #include "../Pages/Actions/ActionsPage.hpp"
 #include "../Pages/Activation/ActivationPage.hpp"
-#include "../Pages/Deactivation/DeactivationPage.hpp"
 #include "../Pages/Initialization/InitializationPage.hpp"
 #include "../Pages/Unactivated/UnactivatedPage.hpp"
 #include "../Configurations/Configuration.hpp"
 #include "../DeviceState/DeviceState.hpp"
 #include "../Mqtt/MqttService.hpp"
+#include "../Server/Server.hpp"
+#include "../WiFiProvider/WiFiProvider.hpp"
+#include <Preferences.h>
 
 namespace SmartLock
 {
     class Application
     {
     private:
-        enum CommandType
-        {
-            Open,
-            Close,
-            Deactivate
-        };
-
-        const char *ssid = "WestaedtWG";
-        const char *password = "inWest2_zuhause";
-
+        Server _server;
         Render _render;
         Logger _logger;
         Controller _controller;
 
+        Preferences _preferences;
         Configuration _configuration;
         DeviceState _deviceState;
+        WiFiProvider _wifiProvider;
         MqttService _mqttService;
 
         ActionsPageModel _actionsPageModel;
         ActivationPageModel _activationPageModel;
-        DeactivationPageModel _deactivationPageModel;
         UnactivatedPageModel _unactivatedPageModel;
 
         ActionsPage _actionsPage;
         ActivationPage _activationPage;
-        DeactivationPage _deactivationPage;
         InitializationPage _initializationPage;
         UnactivatedPage _unactivatedPage;
 
-        void connectToWifi();
-
-        void mqttCallback(const char *topic, uint8_t *payload, unsigned int length);
+        void mqttCallback(std::string topic, JsonDocument message);
 
     public:
         Application();

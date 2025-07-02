@@ -1,7 +1,10 @@
+import { State } from "./State";
+
 export interface Device {
   id: string;
   hardwareId: string;
-  deviceName: string | null;
-  deviceStatus: number;
+  ownerId: string;
+  deviceName: string;
+  state: State;
   registeredOnUtc: Date;
 }

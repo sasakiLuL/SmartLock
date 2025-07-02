@@ -13,7 +13,6 @@ namespace SmartLock
         ActionsPageModel &_viewModel;
 
         Button _openButton;
-        Button _deactivateButton;
 
     public:
         ActionsPage(Controller &controller, Render &render, Logger &logger, ActionsPageModel &modelView);

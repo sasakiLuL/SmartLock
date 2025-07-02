@@ -20,24 +20,10 @@ namespace SmartLock
             _viewModel.toggle();
             this->render();
         });
-
-        _buffer.add(&_deactivateButton);
-
-        _deactivateButton.text("Deactivate");
-        _deactivateButton.textColor(TFT_ORANGE);
-        _deactivateButton.color(TFT_BLACK);
-        _deactivateButton.height(40);
-        _deactivateButton.width(150);
-        _deactivateButton.x((ScreenWidth - _openButton.width()) / 2);
-        _deactivateButton.y(ScreenHeight / 2 + 50);
-        _deactivateButton.onClick([this]()
-        { 
-            _controller.changePage(Path::Deactivation); 
-        });
     }
 
     void ActionsPage::bindings()
     {
-        _openButton.text(_viewModel.isOpened() ? "Close" : "Open");
+        _openButton.text(_viewModel.locked() ? "Unlock" : "Lock");
     }
 }

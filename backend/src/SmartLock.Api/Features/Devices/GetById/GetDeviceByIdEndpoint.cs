@@ -1,30 +1,33 @@
 ﻿using AutoMapper;
 using MediatR;
-using SmartLock.Api.Users;
-using SmartLock.Application.Devices.GetAll;
+using Microsoft.AspNetCore.Mvc;
+using SmartLock.Api.Features.Users;
+using SmartLock.Application.Features.Devices.GetById;
 
-namespace SmartLock.Api.Devices.GetAll;
+namespace SmartLock.Api.Features.Devices.GetById;
 
-public class GetAllDevicesEndpoint : IEndpoint
+public class GetDeviceByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet(
-            $"{DeviceConstants.Routes.Base}",
+            $"{DeviceConstants.Routes.Base}/{DeviceConstants.Routes.GetById}",
             async (
+                [FromRoute] Guid id,
                 ISender sender,
                 IMapper mapper,
                 HttpContext context,
                 CancellationToken cancellationToken) =>
             {
-                var query = new GetAllDevicesQuery();
+                var query = new GetDeviceByIdQuery(id);
 
-                var devices = await sender.Send(query, cancellationToken);
+                var device = await sender.Send(query, cancellationToken);
 
-                return Results.Ok(devices);
+                return Results.Ok(device);
             })
             .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)
             .WithTags(UserConstants.UsersTag);

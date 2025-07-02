@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SmartLock.Api.Users;
-using SmartLock.Application.Devices.GetById;
+using SmartLock.Api.Features.Users;
+using SmartLock.Application.Features.Devices.Toggle.Unlock;
 
-namespace SmartLock.Api.Devices.GetById;
+namespace SmartLock.Api.Features.Devices.Unlock;
 
-public class GetDeviceByIdEndpoint : IEndpoint
+public class UnlockDeviceEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(
-            $"{DeviceConstants.Routes.Base}/{DeviceConstants.Routes.GetById}",
+        app.MapPost(
+            $"{DeviceConstants.Routes.Base}/{DeviceConstants.Routes.Unlock}",
             async (
                 [FromRoute] Guid id,
                 ISender sender,
@@ -19,11 +19,11 @@ public class GetDeviceByIdEndpoint : IEndpoint
                 HttpContext context,
                 CancellationToken cancellationToken) =>
             {
-                var query = new GetDeviceByIdQuery(id);
+                var openDeviceCommand = new UnlockDeviceCommand(id);
 
-                var device = await sender.Send(query, cancellationToken);
+                await sender.Send(openDeviceCommand, cancellationToken);
 
-                return Results.Ok(device);
+                return Results.Ok();
             })
             .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)

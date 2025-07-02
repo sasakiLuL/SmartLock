@@ -1,10 +1,12 @@
-﻿namespace SmartLock.Api.Devices;
+﻿namespace SmartLock.Api.Features.Devices;
 
-public class DeviceConstants
+public static class DeviceConstants
 {
     public static class Routes
     {
         public const string Base = "devices";
+
+        public const string Add = "";
 
         public const string GetById = "{id:guid}";
 
@@ -12,14 +14,14 @@ public class DeviceConstants
 
         public const string Activate = "{id:guid}/activate";
 
+        public const string Deactivate = "{id:guid}/deactivate";
+
         public const string Remove = "{id:guid}";
 
-        public const string Open = "{id:guid}/open";
+        public const string Unlock = "{id:guid}/unlock";
 
-        public const string Close = "{id:guid}/close";
+        public const string Lock = "{id:guid}/lock";
     }
 
     public static readonly string UsersTag = "Users";
-
-    public static readonly string FollowersTag = "Followers";
 }

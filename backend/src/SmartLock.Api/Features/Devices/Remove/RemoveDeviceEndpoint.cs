@@ -1,12 +1,10 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SmartLock.Api.Users;
-using SmartLock.Application.Devices.GetById;
-using SmartLock.Application.Devices.Remove;
+using SmartLock.Api.Features.Users;
+using SmartLock.Application.Features.Devices.Remove;
 
-namespace SmartLock.Api.Devices.Remove;
+namespace SmartLock.Api.Features.Devices.Remove;
 
 public class RemoveDeviceEndpoint : IEndpoint
 {

@@ -2,7 +2,7 @@
 
 namespace SmartLock
 {
-    void MqttService::initialize()
+    void MqttService::initialize(std::function<void(std::string, JsonDocument)> callback)
     {
         _logger.logInfo("Initializing MQTT Service...");
         _logger.logInfo("CA Cert length: " + std::to_string(_configuration.amazonRootCA1.length()));
@@ -19,91 +19,96 @@ namespace SmartLock
 
         _mqttClient.setClient(_networkClient);
         _mqttClient.setServer(_configuration.awsEndpoint.c_str(), _configuration.awsPort);
+        _mqttClient.setBufferSize(4096);
+
+        _mqttCallback = callback;
+        _mqttClient.setCallback([this](const char *topic, uint8_t *payload, unsigned int length)
+        {
+            _logger.logInfo("Received message");
+            _logger.logInfo(topic);
+            
+            String messageBuffer;
+
+            for (int i = 0; i < length; i++)
+                messageBuffer += (char)payload[i];
+                
+            JsonDocument message;
+            DeserializationError error = deserializeJson(message, messageBuffer);
+
+            if (error)
+            {
+                _logger.logError("Failed to deserialize message file");
+                return;
+            }
+
+            _mqttCallback(std::string(topic), message);
+        });
     }
 
     void MqttService::reconnect()
     {
-        if (!_mqttClient.connected())
+        _logger.logInfo("Attempting MQTT connection");
+
+        if (!_mqttClient.connect(_configuration.thingName.c_str()))
         {
-            _logger.logInfo("Attempting MQTT connection");
-
-            if (!_mqttClient.connect(_configuration.thingName.c_str()))
-            {
-                _logger.logError("Failed to connect, rc=" + std::to_string(_mqttClient.state()));
-                _logger.logError("Retrying in 5 seconds...");
-                _isConnected = false;
-                return;
-            }
-
-            _logger.logInfo("Connected to AWS IoT!");
-        }
-
-        if (!_mqttClient.subscribe(_configuration.actionsPolicy.c_str()))
-        {
-            _logger.logError("Failed to subscribe: " + _configuration.actionsPolicy);
-            _isConnected = false;
+            _logger.logError("Failed to connect, rc=" + std::to_string(_mqttClient.state()));
+            _logger.logError("Retrying in 5 seconds...");
+            _connected = false;
             return;
         }
-        else
-        {
-            _logger.logInfo("Subscribed: " + _configuration.actionsPolicy);
-        }
 
-        if (!_mqttClient.subscribe(_configuration.activationRequestsPolicy.c_str()))
+        _logger.logInfo("Connected to AWS IoT!");
+
+        if (!_mqttClient.subscribe(_configuration.deltaTopic.c_str(), 1))
         {
-            _logger.logError("Failed to subscribe: " + _configuration.activationRequestsPolicy);
-            _isConnected = false;
+            _logger.logError("Failed to subscribe: " + _configuration.deltaTopic);
+            _connected = false;
             return;
         }
-        else
+
+        _logger.logInfo("Subscribed: " + _configuration.deltaTopic);
+
+        if (!_mqttClient.subscribe(_configuration.getAcceptedTopic.c_str(), 1))
         {
-            _logger.logInfo("Subscribed: " + _configuration.activationRequestsPolicy);
+            _logger.logError("Failed to subscribe: " + _configuration.getAcceptedTopic);
+            _connected = false;
+            return;
         }
 
-        _isConnected = true;
+        _logger.logInfo("Subscribed: " + _configuration.getAcceptedTopic);
+
+        delay(500);
+
+        _connected = true;
         _onConnectedCallback();
-        _isDisconnectedCallbackInvoked = false;
+        _disconnectedCallbackInvoked = false;
     }
 
     void MqttService::loop()
     {
-        if (WiFi.status() != WL_CONNECTED)
+        if (!_wifiProvider.connected())
         {
-            if (!_isDisconnectedCallbackInvoked)
-            {
-                _onDisconnectedCallback();
-                _isDisconnectedCallbackInvoked = true;
-            }
-
-            auto now = std::chrono::steady_clock::now();
-
-            if (now - _lastTryToConnectMqttPoint >= _reconnectTime)
-            {
-                _lastTryToConnectMqttPoint = now;
-                _logger.logWarning("Wifi is disconnected. Retrying after reconnecting");
-            } 
-
             return;
         }
 
-        if (!_isConnected)
+        if (!_connected)
         {
-            if (!_isDisconnectedCallbackInvoked)
+            if (!_disconnectedCallbackInvoked)
             {
                 _onDisconnectedCallback();
-                _isDisconnectedCallbackInvoked = true;
+                _disconnectedCallbackInvoked = true;
             }
 
             auto now = std::chrono::steady_clock::now();
 
-            if (now - _lastTryToConnectMqttPoint >= _reconnectTime)
+            if (now - _lastTryToConnectPoint >= _reconnectTime)
             {
-                _lastTryToConnectMqttPoint = now;
+                _lastTryToConnectPoint = now;
                 reconnect();
             }
         }
 
-        if (_isConnected)
+        if (_connected)
         {
             _mqttClient.loop();
         }        
@@ -120,27 +125,19 @@ namespace SmartLock
 
         serializeJsonPretty(message, jsonString);
 
+        _logger.logInfo("Published: " + policy);
         return _mqttClient.publish(policy.c_str(), jsonString.c_str());
     }
 
-    void MqttService::setCallback(std::function<void(const char *, uint8_t *, unsigned int)> callback)
+    bool MqttService::publish(std::string policy)
     {
-        _mqttClient.setCallback(callback);
-    }
-
-    std::string MqttService::getCurrentTimeUtc()
-    {
-
-        struct tm timeinfo;
-        if (!getLocalTime(&timeinfo))
+        if (!_mqttClient.connected())
         {
-            Serial.println("Failed to obtain time");
-            return "0000-00-00T00:00:00Z";
+            return false;
         }
 
-        char buffer[25];
-        strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", &timeinfo);
+        _logger.logInfo("Published: " + policy);
 
-        return std::string(buffer);
+        return _mqttClient.publish(policy.c_str(), "");
     }
 }

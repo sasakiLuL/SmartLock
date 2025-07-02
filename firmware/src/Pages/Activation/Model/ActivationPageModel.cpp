@@ -1,32 +1,44 @@
 #include "ActivationPageModel.hpp"
+#include "../../../Mqtt/ActionStatus.hpp"
+#include "../../../Mqtt/ActionType.hpp"
 
 namespace SmartLock
 {
     void ActivationPageModel::sendActivateMessage()
     {
-        JsonDocument message;
-        message["HardwareId"] = _config.thingName;
-        message["ActivationResponse"] = 0;
+        _deviceState.status(DeviceStatus::Activated);
 
-        if (!_mqttService.publish(_config.activationResponsesPolicy, message))
+        JsonDocument message;
+
+        message["state"]["desired"]["action"] = nullptr;
+        message["state"]["reported"]["state"]["locked"] = _deviceState.locked();
+        message["state"]["reported"]["state"]["status"] = static_cast<int>(_deviceState.status());
+        message["state"]["reported"]["action"]["lastExecutedActionId"] = _actionid.c_str();
+        message["state"]["reported"]["action"]["lastExecutedActionStatus"] = static_cast<uint32_t>(ActionStatus::Success);
+        message["state"]["reported"]["action"]["lastExecutedAt"] = millis();
+
+        if (!_mqttService.publish(_config.updateTopic, message))
         {
             _logger.logError("Error was occured while publishing message");
-            return;
         }
-
-        _deviceState.isActivated(true);
     }
 
     void ActivationPageModel::sendRejectMessage()
     {
-        JsonDocument message;
-        message["HardwareId"] = _config.thingName;
-        message["ActivationResponse"] = 1;
+        _deviceState.status(DeviceStatus::Unactivated);
 
-        if (!_mqttService.publish(_config.activationResponsesPolicy, message))
+        JsonDocument message;
+
+        message["state"]["desired"]["action"] = nullptr;
+        message["state"]["reported"]["state"]["locked"] = _deviceState.locked();
+        message["state"]["reported"]["state"]["status"] = static_cast<int>(_deviceState.status());
+        message["state"]["reported"]["action"]["lastExecutedActionId"] = _actionid.c_str();
+        message["state"]["reported"]["action"]["lastExecutedActionStatus"] = static_cast<uint32_t>(ActionStatus::Failure);
+        message["state"]["reported"]["action"]["lastExecutedAt"] = millis();
+
+        if (!_mqttService.publish(_config.updateTopic, message))
         {
             _logger.logError("Error was occured while publishing message");
-            return;
         }
     }
 }

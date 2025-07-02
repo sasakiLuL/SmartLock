@@ -15,6 +15,7 @@ namespace SmartLock
         MqttService &_mqttService;
 
         std::string _username;
+        std::string _actionid;
 
     public:
         ActivationPageModel(Logger &logger, Configuration &config, DeviceState &deviceState, MqttService &mqttService)
@@ -22,6 +23,9 @@ namespace SmartLock
 
         std::string username() const { return _username; }
         void username(const std::string& value) { _username = value; }
+
+        std::string actionId() const { return _actionid; }
+        void actionId(const std::string& value) { _actionid = value; }
 
         void sendActivateMessage();
         void sendRejectMessage();

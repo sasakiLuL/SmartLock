@@ -1,4 +1,4 @@
-﻿namespace SmartLock.Application.Users;
+﻿namespace SmartLock.Application.Features.Users;
 
 public record UserResponse(
     Guid Id,

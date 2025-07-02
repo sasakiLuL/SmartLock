@@ -1,13 +1,11 @@
 ﻿using MediatR;
-using SmartLock.Application.Abstractions;
-using SmartLock.Domain.Core.Exceptions;
-using SmartLock.Domain.Devices;
-using SmartLock.Domain.Shared.EmailAddresses;
-using SmartLock.Domain.Shared.Usernames;
-using SmartLock.Domain.Users;
-using System.ComponentModel.DataAnnotations;
+using SmartLock.Application.Interfaces;
+using SmartLock.Domain.Exceptions;
+using SmartLock.Domain.Features.Users;
+using SmartLock.Domain.ValueObjects.EmailAddresses;
+using SmartLock.Domain.ValueObjects.Usernames;
 
-namespace SmartLock.Application.Users.Register;
+namespace SmartLock.Application.Features.Users.Register;
 
 public class RegisterUserCommandHandler(
     IUserRepository userRepository,
@@ -17,18 +15,15 @@ public class RegisterUserCommandHandler(
 {
     public async Task<Guid> Handle(RegisterUserCommand notification, CancellationToken cancellationToken)
     {
-        var isExistResult = await identityProviderService.IsExistsAsync(
-            userCredentialsProvider.UserId, 
-            cancellationToken);
-
-        if (!isExistResult)
+        if (!await identityProviderService.IsExistsAsync(
+                userCredentialsProvider.UserId, cancellationToken))
         {
             throw new BadRequestException(UserErrors.InvalidUserCredentials);
         }
 
         var email = EmailAddress.CreateAndThrow(notification.Email);
 
-        if (!await userRepository.IsEmailUniqueAsync(email.Value, cancellationToken))
+        if (!await userRepository.IsEmailUniqueAsync(email, cancellationToken))
         {
             throw new BadRequestException(
                 BadRequestException.ValidationErrorMessage,
@@ -37,25 +32,22 @@ public class RegisterUserCommandHandler(
 
         var userName = Username.CreateAndThrow(notification.UserName);
 
-        if (!await userRepository.IsUsernameUniqueAsync(userName.Value, cancellationToken))
+        if (!await userRepository.IsUsernameUniqueAsync(userName, cancellationToken))
         {
             throw new BadRequestException(
                 BadRequestException.ValidationErrorMessage,
                 UserErrors.NonUniqueUsername(userName.Value));
         }
 
-        var id = Guid.NewGuid();
-
-        var user = User.Create(
-            id,
+        var user = UserModel.Create(
             userCredentialsProvider.UserId,
             email,
             userName);
 
-        await userRepository.CreateAsync(user, cancellationToken);
+        await userRepository.CreateAsync(new User(user), cancellationToken);
 
         await unitOfWork.CommitAsync(cancellationToken);
 
-        return id;
+        return user.Id;
     }
 }

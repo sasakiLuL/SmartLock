@@ -1,36 +1,35 @@
 import { Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { NavigationBar } from "../../components/NavigationBar";
-import { useAuth } from "../../hooks/auth/useAuth";
+import { NavigationBar } from "../../../components/NavigationBar";
+import { useAuth } from "../../../hooks/auth/useAuth";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Endpoints } from "../../utils/Endpoints";
-import { Device } from "./Device";
+import { Endpoints } from "../../../utils/Endpoints";
+import { Device } from "../Device";
 import { useNavigate } from "react-router-dom";
-import { NavLinks } from "../../utils/NavLinks";
-import { NotAuthorizedPage } from "../../components/NotAuthorizedPage";
-import { DeviceCard } from "./device-cards/DeviceCard";
-import { EmptyDeviceCard } from "./device-cards/EmptyDeviceCard";
-import { FailurePage } from "../../components/FailurePage";
-import { ActivateDeviceDialog } from "./ActivateDeviceDialog";
-import { ErrorSnackbar } from "../../components/ErrorSnackbar";
-import { SuccessSnackbar } from "../../components/SuccessSnackbar";
+import { NavLinks } from "../../../utils/NavLinks";
+import { NotAuthorizedPage } from "../../../components/NotAuthorizedPage";
+import { FailurePage } from "../../../components/FailurePage";
+import { ErrorSnackbar } from "../../../components/ErrorSnackbar";
+import { SuccessSnackbar } from "../../../components/SuccessSnackbar";
+import { AddDeviceDialog } from "../add/AddDeviceDialog";
+import { EmptyDeviceCard } from "../../../components/device-cards/EmptyDeviceCard";
+import { DeviceCard } from "../../../components/device-cards/DeviceCard";
 
 export function DevicesPage() {
   const auth = useAuth();
   const navigate = useNavigate();
 
   const [devices, setDevices] = useState<Device[]>([]);
-  const [isDevicesFetchingFailed, setIsDevicesFetchingFailed] =
+  const [devicesFetchingFailed, setDevicesFetchingFailed] =
     useState<boolean>(false);
 
-  const [isDevicesLoading, setIsDevicesLoading] = useState<boolean>(true);
+  const [devicesLoading, setDevicesLoading] = useState<boolean>(true);
 
-  const [isActivateDeviceDialogOpened, setIsActivateDeviceDialogOpened] =
+  const [addDeviceDialogOpened, setAddDeviceDialogOpened] =
     useState<boolean>(false);
-  const [activationError, setActivationError] = useState<string | null>(null);
-  const [isActivationSuccess, setIsActivationSuccess] =
-    useState<boolean>(false);
+  const [addingError, setAddingError] = useState<string | null>(null);
+  const [addingSuccess, setAddingSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -40,13 +39,13 @@ export function DevicesPage() {
         })
         .then((response) => {
           setDevices(response.data);
-          setIsDevicesLoading(false);
+          setDevicesLoading(false);
         })
         .catch(() => {
-          setIsDevicesFetchingFailed(true);
+          setDevicesFetchingFailed(true);
         });
     }
-  }, [auth.token, isActivateDeviceDialogOpened]);
+  }, [auth.token, addDeviceDialogOpened]);
 
   if (!auth.isAuthenticated) {
     return (
@@ -61,7 +60,7 @@ export function DevicesPage() {
     );
   }
 
-  if (isDevicesFetchingFailed) {
+  if (devicesFetchingFailed) {
     return (
       <>
         <NavigationBar />
@@ -82,10 +81,10 @@ export function DevicesPage() {
             <Button
               variant="contained"
               onClick={() => {
-                setIsActivateDeviceDialogOpened(true);
+                setAddDeviceDialogOpened(true);
               }}
             >
-              Activate device
+              Add device
             </Button>
           </Grid>
 
@@ -95,15 +94,15 @@ export function DevicesPage() {
               spacing={{ xs: 2, md: 3 }}
               columns={{ xs: 4, sm: 8, md: 12 }}
             >
-              {isDevicesLoading ? (
+              {devicesLoading ? (
                 Array.from({ length: 3 }).map((index) => (
                   <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
                     <EmptyDeviceCard />
                   </Grid>
                 ))
               ) : devices.length != 0 ? (
-                devices.map((device, index) => (
-                  <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
+                devices.map((device) => (
+                  <Grid key={device.id} size={{ xs: 2, sm: 4, md: 4 }}>
                     <DeviceCard
                       isActive={true}
                       device={device}
@@ -126,33 +125,30 @@ export function DevicesPage() {
           </Grid>
         </Grid>
       </Container>
-      <SuccessSnackbar
-        message="Activation request has been successfuly sent!"
-        open={isActivationSuccess}
-      />
+      <SuccessSnackbar message="Device has been added" open={addingSuccess} />
       <ErrorSnackbar
-        message={activationError ?? ""}
-        open={activationError ? true : false}
+        message={addingError ?? ""}
+        open={addingError ? true : false}
       />
-      <ActivateDeviceDialog
-        open={isActivateDeviceDialogOpened}
+      <AddDeviceDialog
+        open={addDeviceDialogOpened}
         onSubmit={(event) => {
           if (auth.isAuthenticated) {
             axios
-              .post(Endpoints.activateDevice(event.id), null, {
+              .post(Endpoints.addDevice, event, {
                 headers: { Authorization: `Bearer ${auth.token}` },
               })
               .then(() => {
-                setIsActivationSuccess(true);
-                setIsActivateDeviceDialogOpened(false);
+                setAddingSuccess(true);
+                setAddDeviceDialogOpened(false);
               })
               .catch((error) => {
-                setActivationError(error.message);
-                setIsActivateDeviceDialogOpened(false);
+                setAddingError(error.message);
+                setAddDeviceDialogOpened(false);
               });
           }
         }}
-        onClose={() => setIsActivateDeviceDialogOpened(false)}
+        onClose={() => setAddDeviceDialogOpened(false)}
       />
     </>
   );

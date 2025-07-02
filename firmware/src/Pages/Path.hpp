@@ -2,7 +2,7 @@
 
 namespace SmartLock
 {
-    enum Path
+    enum class Path
     {
         Initialization,
         Unactivated,

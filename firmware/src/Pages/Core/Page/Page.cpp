@@ -15,8 +15,6 @@ namespace SmartLock
         _buffer.loop();
     }
 
-    
-
     void Page::render()
     {
         bindings();

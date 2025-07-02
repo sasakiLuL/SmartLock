@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SmartLock.Application.Abstractions;
+using SmartLock.Application.Interfaces;
 using System.Security.Claims;
 
 namespace SmartLock.Authorization;

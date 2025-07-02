@@ -5,7 +5,7 @@ using SmartLock.Domain;
 using SmartLock.Api.Extensions;
 using SmartLock.Api;
 using SmartLock.Api.Middlewares;
-using SmartLock.Messaging;
+using SmartLock.Messaging.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,6 @@ builder.Services.AddDomain();
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddDataAccessLayer(builder.Configuration);
 builder.Services.AddKeycloack(builder.Configuration);
-builder.Services.AddMessaging();
 builder.Services.AddApi(builder.Configuration);
 
 builder.Services.AddExceptionHandler<ExceptionHandler>();
@@ -40,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseMessaging();
+await app.UseMessagingAsync();
 app.UseExceptionHandler("/error");
 
 app.UseCors(frontendOrigin);

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SmartLock.Domain.Core.Exceptions;
+using SmartLock.Domain.Exceptions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace SmartLock.Api.Middlewares;

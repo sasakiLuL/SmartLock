@@ -2,7 +2,7 @@
 
 #include "Application/Application.hpp"
 
-SmartLock::Application app = SmartLock::Application();
+SmartLock::Application app{};
 
 void setup()
 {

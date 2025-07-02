@@ -5,6 +5,7 @@
 #include "../Logging/Logger.hpp"
 
 #define AmazonRootCA1Path "/AmazonRootCA1.pem"
+#define ConfigurationPagePath "/ConfigurationPage.html"
 #define DeviceCertificatePath "/DeviceCertificate.pem"
 #define DevicePrivateKeyPath "/DevicePrivateKey.key"
 #define CalibrationFilePath "/Calibration"
@@ -24,16 +25,17 @@ namespace SmartLock
 
         void initialize();
 
+        std::string serverSSID;
         std::string thingName;
         std::string awsEndpoint;
         int32_t awsPort;
-        std::string actionsPolicy;
-        std::string activationRequestsPolicy;
-        std::string activationResponsesPolicy;
-        std::string logsPolicy;
-        std::string deactivationsPolicy;
+        std::string updateTopic;
+        std::string deltaTopic;
         std::string amazonRootCA1;
         std::string deviceCertificate;
         std::string devicePrivateKey;
+        std::string getTopic;
+        std::string getAcceptedTopic;
+        std::string configurationPage;
     };
 }

@@ -25,6 +25,7 @@ namespace SmartLock
         amazonRootCA1 = fileToString(AmazonRootCA1Path);
         deviceCertificate = fileToString(DeviceCertificatePath);
         devicePrivateKey = fileToString(DevicePrivateKeyPath);
+        configurationPage = fileToString(ConfigurationPagePath);
         std::string configString = fileToString(ConfigPath);
 
         JsonDocument configDocument;
@@ -36,13 +37,12 @@ namespace SmartLock
         }
 
         thingName = configDocument["ThingName"].as<const char *>();
+        serverSSID = "SmartLock_" + thingName.substr(0, 7);
         awsEndpoint = configDocument["AwsEndpoint"].as<const char *>();
         awsPort = configDocument["AwsPort"].as<int32_t>();
-        actionsPolicy = configDocument["ActionsPolicy"].as<const char *>();
-        activationRequestsPolicy = configDocument["ActivationRequestsPolicy"].as<const char *>();
-        activationResponsesPolicy = configDocument["ActivationResponsesPolicy"].as<const char *>();
-        logsPolicy = configDocument["LogsPolicy"].as<const char *>();
-        deactivationsPolicy = configDocument["DeactivationsPolicy"].as<const char *>();
+        updateTopic = configDocument["UpdateTopic"].as<const char *>();
+        deltaTopic = configDocument["DeltaTopic"].as<const char *>();
+        getTopic = configDocument["GetTopic"].as<const char *>();
+        getAcceptedTopic = configDocument["GetAcceptedTopic"].as<const char *>();
     }
-
 }

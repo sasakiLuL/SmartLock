@@ -2,9 +2,9 @@
 
 namespace PrivateCertificateGenerator.Commands;
 
-public class GenerateRootSertificatesCommand : Command, ICommand
+public class GenerateRootCertificatesCommand : Command, ICommand
 {
-    public GenerateRootSertificatesCommand() : base("gen-rootCA-serts")
+    public GenerateRootCertificatesCommand() : base("gen-rootCA-serts")
     {
         ParametersKeys.Add("FilePath",
         [

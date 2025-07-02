@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PrivateCertificateGenerator.CertificateBuilders;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace PrivateCertificateGenerator;

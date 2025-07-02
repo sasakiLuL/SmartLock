@@ -1,6 +1,7 @@
 import { Button, Container, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useAuthActions } from "../hooks/auth/useAuthActions";
+import useAuthActions from "../hooks/auth/useAuthActions";
+import { NavLinks } from "../utils/NavLinks";
 
 export interface NotAuthorizedPageProps {
   message: String;
@@ -55,7 +56,9 @@ export function NotAuthorizedPage({ message }: NotAuthorizedPageProps) {
             color="primary"
             size="small"
             onClick={() => {
-              authActions.register();
+              authActions.register({
+                redirectUri: window.location.origin + NavLinks.Registering,
+              });
             }}
           >
             Sign up

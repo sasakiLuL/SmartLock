@@ -15,7 +15,7 @@ import { useState } from "react";
 import { NavLinks } from "../utils/NavLinks";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/auth/useAuth";
-import { useAuthActions } from "../hooks/auth/useAuthActions";
+import useAuthActions from "../hooks/auth/useAuthActions";
 
 export function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -117,9 +117,7 @@ export function NavigationBar() {
                 <Typography variant="body2" sx={{ m: 1 }} color="text.primary">
                   {auth.tokenParsed?.preferred_username ?? "N/A"}
                 </Typography>
-                <IconButton sx={{ p: 0 }}>
-                  <AccountCircleIcon />
-                </IconButton>
+                <AccountCircleIcon />
               </Button>
             ) : (
               <Button

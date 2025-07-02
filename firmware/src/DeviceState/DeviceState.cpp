@@ -12,7 +12,7 @@ namespace SmartLock
             return;
         }
 
-        _data = {false, true};
+        _data = {DeviceStatus::Unactivated, false};
         writeDeviceStateToFile(_data);
     }
 
@@ -46,15 +46,15 @@ namespace SmartLock
         file.close();
     }
 
-    void DeviceState::isActivated(bool value)
+    void DeviceState::status(DeviceStatus value)
     {
-        _data.isActivated = value;
+        _data.status = value;
         writeDeviceStateToFile(_data);
     }
 
-    void DeviceState::isOpened(bool value)
+    void DeviceState::locked(bool value)
     {
-        _data.isOpened = value;
+        _data.locked = value;
         writeDeviceStateToFile(_data);
     }
 }

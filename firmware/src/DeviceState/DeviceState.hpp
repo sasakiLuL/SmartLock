@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Logging/Logger.hpp"
+#include "DeviceStatus.hpp"
 
 #define DeviceStateFilePath "/State"
 
@@ -11,8 +12,8 @@ namespace SmartLock
     private:
         struct Data
         {
-            bool isActivated;
-            bool isOpened;
+            DeviceStatus status;
+            bool locked;
         };
 
         Logger &_logger;
@@ -26,10 +27,10 @@ namespace SmartLock
 
         void initialize();
 
-        bool isActivated() const { return _data.isActivated; }
-        bool isOpened() const { return _data.isOpened; }
+        DeviceStatus status() const { return _data.status; }
+        bool locked() const { return _data.locked; }
 
-        void isActivated(bool value);
-        void isOpened(bool value);
+        void status(DeviceStatus value);
+        void locked(bool value);
     };
 }

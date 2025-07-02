@@ -7,11 +7,6 @@ namespace SmartLock
     {
         auto tft = _render.getTFT();
 
-        if (message.length() > maximumLogMessageSize())
-        {
-            message.replace(message.length() - 3, 3, "...");
-        }
-
         if (_lastDebugMessageIndex == LoggCount)
         {
             for (int i = 1; i < LoggCount; i++)
@@ -52,11 +47,6 @@ namespace SmartLock
         Serial.println(logMessage.c_str());
         write(logMessage);
         render();
-    }
-
-    size_t Logger::maximumLogMessageSize()
-    {
-        return ScreenWidth / LetterWidth - 3;
     }
 
     void Logger::render()

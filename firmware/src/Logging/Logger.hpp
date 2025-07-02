@@ -23,8 +23,6 @@ namespace SmartLock
         void logInfo(std::string message);
         void logWarning(std::string message);
 
-        size_t maximumLogMessageSize();
-
         void render();
     };
 }

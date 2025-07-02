@@ -17,6 +17,6 @@ namespace SmartLock
             : ViewModel(logger), _config(config), _deviceState(deviceState), _mqttService(mqttService) {}
 
         void toggle();
-        bool isOpened();
+        bool locked();
     };
 }

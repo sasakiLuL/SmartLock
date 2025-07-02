@@ -1,14 +1,14 @@
-﻿using SmartLock.Domain.Core;
+﻿using SmartLock.Domain.Exceptions;
 
-namespace SmartLock.Domain.Shared.Usernames;
+namespace SmartLock.Domain.ValueObjects.Usernames;
 
 public static class UsernameErrors
 {
     public readonly static Error TooLong = new Error(
-        "Username.TooLong", 
+        "Username.TooLong",
         "The username is too long.");
 
     public readonly static Error InvalidFormat = new Error(
-        "Username.InvalidFormat", 
+        "Username.InvalidFormat",
         "The username contains unacceptable symbols.");
 }

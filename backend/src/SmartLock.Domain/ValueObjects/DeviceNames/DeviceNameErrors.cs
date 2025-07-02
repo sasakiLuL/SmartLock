@@ -1,6 +1,6 @@
-﻿using SmartLock.Domain.Core;
+﻿using SmartLock.Domain.Exceptions;
 
-namespace SmartLock.Domain.Shared.DeviceName;
+namespace SmartLock.Domain.ValueObjects.DeviceNames;
 
 public static class DeviceNameErrors
 {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core.Extensions;
+using SmartLock.Domain.Extensions;
 
-namespace SmartLock.Domain.Shared.DeviceName;
+namespace SmartLock.Domain.ValueObjects.DeviceNames;
 
 public class DeviceNameValidator : AbstractValidator<DeviceName>
 {

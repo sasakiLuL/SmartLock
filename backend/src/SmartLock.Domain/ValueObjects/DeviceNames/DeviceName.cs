@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core;
 
-namespace SmartLock.Domain.Shared.DeviceName;
+namespace SmartLock.Domain.ValueObjects.DeviceNames;
 
 public record DeviceName : ValueObject<string>
 {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core.Extensions;
+using SmartLock.Domain.Extensions;
 
-namespace SmartLock.Domain.Shared.EmailAddresses;
+namespace SmartLock.Domain.ValueObjects.EmailAddresses;
 
 public class EmailAddressValidator : AbstractValidator<EmailAddress>
 {

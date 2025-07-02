@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core.Extensions;
+using SmartLock.Domain.Extensions;
 
-namespace SmartLock.Domain.Shared.Usernames;
+namespace SmartLock.Domain.ValueObjects.Usernames;
 
 public class UsernameValidator : AbstractValidator<Username>
 {

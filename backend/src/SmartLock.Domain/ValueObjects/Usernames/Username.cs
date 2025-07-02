@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core;
 
-namespace SmartLock.Domain.Shared.Usernames;
+namespace SmartLock.Domain.ValueObjects.Usernames;
 
 public record Username : ValueObject<string>
 {

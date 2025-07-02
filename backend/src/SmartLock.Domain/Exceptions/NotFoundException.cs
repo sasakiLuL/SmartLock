@@ -1,6 +1,4 @@
-﻿using SmartLock.Domain.Core;
-
-namespace SmartLock.Domain.Core.Exceptions;
+﻿namespace SmartLock.Domain.Exceptions;
 
 public class NotFoundException : Exception
 {

@@ -1,6 +1,6 @@
-﻿using SmartLock.Domain.Core;
+﻿using SmartLock.Domain.Exceptions;
 
-namespace SmartLock.Domain.Shared.EmailAddresses;
+namespace SmartLock.Domain.ValueObjects.EmailAddresses;
 
 public static class EmailAddressErrors
 {

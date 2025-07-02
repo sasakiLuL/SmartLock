@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core;
+using SmartLock.Domain.Exceptions;
 
-namespace SmartLock.Domain.Core.Extensions;
+namespace SmartLock.Domain.Extensions;
 
 public static class ValidationExtensions
 {

@@ -1,4 +1,4 @@
-﻿namespace SmartLock.Domain.Core;
+﻿namespace SmartLock.Domain.ValueObjects;
 
 public abstract record ValueObject<TValue>
 {

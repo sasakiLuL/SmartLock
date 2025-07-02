@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using SmartLock.Domain.Core;
 
-namespace SmartLock.Domain.Shared.EmailAddresses;
+namespace SmartLock.Domain.ValueObjects.EmailAddresses;
 
 public record EmailAddress : ValueObject<string>
 {
